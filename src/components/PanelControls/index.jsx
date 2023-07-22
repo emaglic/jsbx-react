@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { Controls } from "./index.style";
 
 const PanelControls = () => {
   return (
-    <div>
+    <Controls>
       <Button>Toggle Left</Button>
       <Button>Toggle Right</Button>
-    </div>
+    </Controls>
   );
 };
 
