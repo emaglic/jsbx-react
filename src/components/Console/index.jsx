@@ -45,23 +45,29 @@ const Console = ({ clearConsole }) => {
     setConsoleStatements([]);
   }, [clearConsole]);
 
+  const handleValue = (value) => {
+    if (typeof value === "object") return JSON.stringify(...value, null, 2);
+    return value.toString();
+  };
+
   const handleStatement = (statement) => {
+    const value = statement.value;
     const random = Math.random() * Math.random();
     switch (statement.type) {
       case "log":
-        return <Log key={random}>{statement.value.toString()}</Log>;
+        return <Log key={random}>{handleValue(value)}</Log>;
 
       case "info":
-        return <Info key={random}>{statement.value.toString()}</Info>;
+        return <Info key={random}>{handleValue(value)}</Info>;
 
       case "success":
-        return <Success key={random}>{statement.value.toString()}</Success>;
+        return <Success key={random}>{handleValue(value)}</Success>;
 
       case "warn":
-        return <Warning key={random}>{statement.value.toString()}</Warning>;
+        return <Warning key={random}>{handleValue(value)}</Warning>;
 
       case "error":
-        return <Error key={random}>{statement.value.toString()}</Error>;
+        return <Error key={random}>{handleValue(value)}</Error>;
     }
   };
 

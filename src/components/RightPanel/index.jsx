@@ -9,6 +9,7 @@ import {
 } from "./index.style";
 import Console from "../Console";
 import createWindow from "../../utils/create-window";
+
 const RightPanel = ({ editorValues }) => {
   const [value, setValue] = useState(0);
   const [iframeKey, setIframeKey] = useState(new Date().getTime());
@@ -40,7 +41,8 @@ const RightPanel = ({ editorValues }) => {
         </Tabs>
         {value === 0 ? (
           <Button
-            style={{ marginLeft: "auto" }}
+            variant="contained"
+            style={{ margin: "0.5rem 0.5rem 0.5rem auto" }}
             onClick={() => {
               setForceUpdateConsole(!forceUpdateConsole);
             }}

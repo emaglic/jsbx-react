@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 const statement = {
   padding: "0.5rem",
   borderBottom: "1px solid #000",
+  fontFamily: "monospace",
 };
 
 const Log = styled("div")({
