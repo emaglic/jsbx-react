@@ -70,6 +70,7 @@ queryParameters.get("html")
       </Header>
       <div role="tabpanel" hidden={value !== 0}>
         <Editor
+          style={{ width: "100%", height: "100%" }}
           className="editor"
           defaultLanguage="html"
           defaultValue={(() => handleGetQueryParams("html", html))()}
@@ -83,6 +84,7 @@ queryParameters.get("html")
       </div>
       <div role="tabpanel" hidden={value !== 1}>
         <Editor
+          style={{ width: "100%", height: "100%" }}
           className="editor"
           defaultLanguage="css"
           defaultValue={(() => handleGetQueryParams("css", ""))()}
@@ -96,6 +98,7 @@ queryParameters.get("html")
       </div>
       <div role="tabpanel" hidden={value !== 2}>
         <Editor
+          style={{ width: "100%", height: "100%" }}
           className="editor"
           defaultLanguage="javascript"
           defaultValue={(() => handleGetQueryParams("js", ""))()}

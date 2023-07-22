@@ -2,11 +2,23 @@ import React from "react";
 import { Button } from "@mui/material";
 import { Controls } from "./index.style";
 
-const PanelControls = () => {
+const PanelControls = ({ handlePanelToggle }) => {
   return (
     <Controls>
-      <Button>Toggle Left</Button>
-      <Button>Toggle Right</Button>
+      <Button
+        onClick={() => {
+          handlePanelToggle("left");
+        }}
+      >
+        Toggle Left
+      </Button>
+      <Button
+        onClick={() => {
+          handlePanelToggle("right");
+        }}
+      >
+        Toggle Right
+      </Button>
     </Controls>
   );
 };

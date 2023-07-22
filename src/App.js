@@ -1,6 +1,5 @@
 import Header from "./components/Header";
 import BodyContent from "./components/BodyContent";
-import PanelControls from "./components/PanelControls";
 
 function App() {
   return (
@@ -9,13 +8,12 @@ function App() {
       style={{
         display: "grid",
         gridTemplateColumns: "1fr",
-        gridTemplateRows: "auto 1fr auto",
+        gridTemplateRows: "auto 1fr",
         height: "100vh",
       }}
     >
       <Header />
       <BodyContent />
-      <PanelControls />
     </div>
   );
 }

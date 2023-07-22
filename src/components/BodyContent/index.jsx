@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import LeftPanel from "../LeftPanel";
 import RightPanel from "../RightPanel";
+import PanelControls from "../PanelControls";
 import { Container } from "./index.style";
 
 const BodyContent = () => {
+  const [panelState, setPanelState] = useState({ left: true, right: true });
   const [editorValues, setEditorValues] = useState({
     runTime: null,
     html: "",
@@ -15,11 +17,31 @@ const BodyContent = () => {
     setEditorValues(values);
   };
 
+  const handlePanelToggle = (which) => {
+    if (which === "left") {
+      setPanelState((prev) => {
+        return { ...prev, left: !prev.left };
+      });
+    }
+    if (which === "right") {
+      setPanelState((prev) => {
+        return { ...prev, right: !prev.right };
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log("panelState: ", panelState);
+  }, [panelState]);
+
   return (
-    <Container>
-      <LeftPanel setEditorValues={getEditorValues} />
-      <RightPanel editorValues={editorValues} />
-    </Container>
+    <>
+      <Container panelState={panelState}>
+        <LeftPanel setEditorValues={getEditorValues} />
+        <RightPanel editorValues={editorValues} />
+      </Container>
+      <PanelControls handlePanelToggle={handlePanelToggle} />
+    </>
   );
 };
 
