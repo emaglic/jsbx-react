@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { Tabs, Tab, Button } from "@mui/material";
 import { Container, Header } from "./index.style";
@@ -14,6 +14,7 @@ const LeftPanel = ({ setEditorValues }) => {
   const handleRun = () => {
     if (!htmlRef.current || !cssRef.current || !jsRef.current) return;
     setEditorValues({
+      runTime: new Date().getTime(),
       html: htmlRef.current.getValue(),
       css: cssRef.current.getValue(),
       js: jsRef.current.getValue(),

@@ -5,6 +5,7 @@ import { Container } from "./index.style";
 
 const BodyContent = () => {
   const [editorValues, setEditorValues] = useState({
+    runTime: null,
     html: "",
     css: "",
     js: "",

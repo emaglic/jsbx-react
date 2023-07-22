@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Tabs, Tab, Button } from "@mui/material";
 import {
   Container,
@@ -12,7 +12,7 @@ import createWindow from "../../utils/create-window";
 const RightPanel = ({ editorValues }) => {
   const [value, setValue] = useState(0);
   const [iframeKey, setIframeKey] = useState(new Date().getTime());
-  const [iframeRef, setIframeRef] = useState(null);
+  const iframeRef = useRef();
   const [forceUpdateConsole, setForceUpdateConsole] = useState(false);
 
   useEffect(() => {
@@ -20,9 +20,8 @@ const RightPanel = ({ editorValues }) => {
   }, [editorValues]);
 
   useEffect(() => {
-    const iframeDoc = iframeRef?.contentWindow?.document;
-    createWindow(iframeDoc, editorValues);
-  }, [iframeRef]);
+    createWindow(iframeRef, editorValues);
+  }, [iframeKey]);
 
   return (
     <Container>
@@ -56,7 +55,7 @@ const RightPanel = ({ editorValues }) => {
         <Console clearConsole={forceUpdateConsole} />
       </ConsolePanel>
       <PreviewPanel role="tabpanel" hidden={value !== 1}>
-        <PreviewIframe key={iframeKey} ref={setIframeRef}></PreviewIframe>
+        <PreviewIframe key={iframeKey} ref={iframeRef}></PreviewIframe>
       </PreviewPanel>
     </Container>
   );
