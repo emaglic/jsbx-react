@@ -35,6 +35,7 @@ const BodyContent = () => {
   }, [panelState]);
 
   const getStyle = () => {
+    if (!panelState.right && !panelState.left) return "50% 50%";
     if (!panelState.right) {
       return "0 100%";
     }
