@@ -1,14 +1,21 @@
 import { styled } from "@mui/material/styles";
 
 const Container = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  gridTemplateRows: "auto 1fr",
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  overflowX: "hidden",
 });
 
 const Header = styled("div")({
   display: "flex",
   flexDirection: "row",
+  width: "100%",
+  //justifyContent: "space-around",
 });
 
-export { Container, Header };
+const Section = styled("div")({
+  flexGrow: 1,
+});
+
+export { Container, Header, Section };

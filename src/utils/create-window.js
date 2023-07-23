@@ -25,10 +25,10 @@ const createWindow = (iframeRef, { html, js, css }) => {
 
     const injectScript = iframeDoc.createElement("script");
     injectScript.innerHTML = /*javascript*/ `
-        window.console.log = parent.window.console.log;
-        window.console.error = parent.window.console.error;
-        window.console.info = parent.window.console.info;
-        window.console.warn = parent.window.console.warn;
+        window.console.log = parent.window.childConsole.log;
+        window.console.error = parent.window.childConsole.error;
+        window.console.info = parent.window.childConsole.info;
+        window.console.warn = parent.window.childConsole.warn;
 
         window.onerror = (error, url, line) => {
             parent.window.console.error(error, null, ' | line ' + line);

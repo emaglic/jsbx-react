@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Log, Success, Warning, Info, Error } from "./index.style";
 
+window.childConsole = {};
+
 const parentWindow = {
   log: window.console.log,
   info: window.console.info,
@@ -16,29 +18,29 @@ const Console = ({ clearConsole }) => {
     setConsoleStatements((prev) => [...prev, statement]);
   };
 
-  window.console.log = (...args) => {
+  window.childConsole.log = (...args) => {
     handleConsole({ type: "log", value: args });
-    parentWindow.log(...args);
+    //parentWindow.log(...args);
   };
 
-  window.console.info = (...args) => {
+  window.childConsole.info = (...args) => {
     handleConsole({ type: "info", value: args });
-    parentWindow.info(...args);
+    //parentWindow.info(...args);
   };
 
-  window.console.success = (...args) => {
+  window.childConsole.success = (...args) => {
     handleConsole({ type: "success", value: args });
-    parentWindow.success(...args);
+    //parentWindow.success(...args);
   };
 
-  window.console.warn = (...args) => {
+  window.childConsole.warn = (...args) => {
     handleConsole({ type: "warn", value: args });
-    parentWindow.warn(...args);
+    //parentWindow.warn(...args);
   };
 
-  window.console.error = (...args) => {
+  window.childConsole.error = (...args) => {
     handleConsole({ type: "error", value: args });
-    parentWindow.error(...args);
+    //parentWindow.error(...args);
   };
 
   useEffect(() => {

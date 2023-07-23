@@ -34,9 +34,19 @@ const BodyContent = () => {
     console.log("panelState: ", panelState);
   }, [panelState]);
 
+  const getStyle = () => {
+    if (!panelState.right) {
+      return "0 100%";
+    }
+    if (!panelState.left) {
+      return "100% 0%";
+    }
+    return "50% 50%";
+  };
+
   return (
     <>
-      <Container panelState={panelState}>
+      <Container sx={{ gridTemplateColumns: `${getStyle()}` }}>
         <LeftPanel setEditorValues={getEditorValues} />
         <RightPanel editorValues={editorValues} />
       </Container>

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
 import { Tabs, Tab, Button } from "@mui/material";
-import { Container, Header } from "./index.style";
+import { Container, Header, Section } from "./index.style";
 import { html } from "../../utils/default-content/html";
 import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
 
@@ -68,48 +68,50 @@ queryParameters.get("html")
           Run
         </Button>
       </Header>
-      <div role="tabpanel" hidden={value !== 0}>
-        <Editor
-          style={{ width: "100%", height: "100%" }}
-          className="editor"
-          defaultLanguage="html"
-          defaultValue={(() => handleGetQueryParams("html", html))()}
-          onChange={(value) => {
-            handleSetQueryParams("html", value);
-          }}
-          onMount={(editor) => {
-            htmlRef.current = editor;
-          }}
-        />
-      </div>
-      <div role="tabpanel" hidden={value !== 1}>
-        <Editor
-          style={{ width: "100%", height: "100%" }}
-          className="editor"
-          defaultLanguage="css"
-          defaultValue={(() => handleGetQueryParams("css", ""))()}
-          onChange={(value) => {
-            handleSetQueryParams("css", value);
-          }}
-          onMount={(editor) => {
-            cssRef.current = editor;
-          }}
-        />
-      </div>
-      <div role="tabpanel" hidden={value !== 2}>
-        <Editor
-          style={{ width: "100%", height: "100%" }}
-          className="editor"
-          defaultLanguage="javascript"
-          defaultValue={(() => handleGetQueryParams("js", ""))()}
-          onChange={(value) => {
-            handleSetQueryParams("js", value);
-          }}
-          onMount={(editor) => {
-            jsRef.current = editor;
-          }}
-        />
-      </div>
+      <Section>
+        <div role="tabpanel" hidden={value !== 0} style={{ height: "100%" }}>
+          <Editor
+            style={{ width: "100%", height: "100%" }}
+            className="editor"
+            defaultLanguage="html"
+            defaultValue={(() => handleGetQueryParams("html", html))()}
+            onChange={(value) => {
+              handleSetQueryParams("html", value);
+            }}
+            onMount={(editor) => {
+              htmlRef.current = editor;
+            }}
+          />
+        </div>
+        <div role="tabpanel" hidden={value !== 1} style={{ height: "100%" }}>
+          <Editor
+            style={{ width: "100%", height: "100%" }}
+            className="editor"
+            defaultLanguage="css"
+            defaultValue={(() => handleGetQueryParams("css", ""))()}
+            onChange={(value) => {
+              handleSetQueryParams("css", value);
+            }}
+            onMount={(editor) => {
+              cssRef.current = editor;
+            }}
+          />
+        </div>
+        <div role="tabpanel" hidden={value !== 2} style={{ height: "100%" }}>
+          <Editor
+            style={{ width: "100%", height: "100%" }}
+            className="editor"
+            defaultLanguage="javascript"
+            defaultValue={(() => handleGetQueryParams("js", ""))()}
+            onChange={(value) => {
+              handleSetQueryParams("js", value);
+            }}
+            onMount={(editor) => {
+              jsRef.current = editor;
+            }}
+          />
+        </div>
+      </Section>
     </Container>
   );
 };

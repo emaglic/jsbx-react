@@ -6,6 +6,7 @@ const Container = styled("div")({
   gridTemplateRows: "auto 1fr",
   height: "100%",
   overflowY: "hidden",
+  overflowX: "hidden",
 });
 
 const Header = styled("div")({
