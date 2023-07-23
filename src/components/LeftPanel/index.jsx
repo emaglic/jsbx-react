@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
 import { Tabs, Tab, Button } from "@mui/material";
-import { Container, Header, Section } from "./index.style";
-import { html } from "../../utils/default-content/html";
+import { Container, Header, Section, ButtonContainer } from "./index.style";
+import html from "../../utils/default-content/html";
+import js from "../../utils/default-content/js";
+import css from "../../utils/default-content/css";
 import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
 
 const LeftPanel = ({ setEditorValues }) => {
@@ -38,12 +40,6 @@ const LeftPanel = ({ setEditorValues }) => {
     });
   };
 
-  /*
-queryParameters.get("html")
-              ? base64ToUtf8(queryParameters.get("html"))
-              : html
-  */
-
   return (
     <Container>
       <Header>
@@ -60,20 +56,18 @@ queryParameters.get("html")
           <Tab value={1} label="CSS" id="simple-tab-1" />
           <Tab value={2} label="JS" id="simple-tab-2" />
         </Tabs>
-        <Button
-          variant="contained"
-          style={{ margin: "0.5rem 0.5rem 0.5rem auto" }}
-          onClick={handleRun}
-        >
-          Run
-        </Button>
+        <ButtonContainer>
+          <Button variant="contained" onClick={handleRun}>
+            Run
+          </Button>
+        </ButtonContainer>
       </Header>
       <Section>
         <div role="tabpanel" hidden={value !== 0} style={{ height: "100%" }}>
           <Editor
-            style={{ width: "100%", height: "100%" }}
             className="editor"
             defaultLanguage="html"
+            theme="vs-dark"
             defaultValue={(() => handleGetQueryParams("html", html))()}
             onChange={(value) => {
               handleSetQueryParams("html", value);
@@ -85,10 +79,10 @@ queryParameters.get("html")
         </div>
         <div role="tabpanel" hidden={value !== 1} style={{ height: "100%" }}>
           <Editor
-            style={{ width: "100%", height: "100%" }}
             className="editor"
             defaultLanguage="css"
-            defaultValue={(() => handleGetQueryParams("css", ""))()}
+            theme="vs-dark"
+            defaultValue={(() => handleGetQueryParams("css", css))()}
             onChange={(value) => {
               handleSetQueryParams("css", value);
             }}
@@ -99,10 +93,10 @@ queryParameters.get("html")
         </div>
         <div role="tabpanel" hidden={value !== 2} style={{ height: "100%" }}>
           <Editor
-            style={{ width: "100%", height: "100%" }}
             className="editor"
             defaultLanguage="javascript"
-            defaultValue={(() => handleGetQueryParams("js", ""))()}
+            theme="vs-dark"
+            defaultValue={(() => handleGetQueryParams("js", js))()}
             onChange={(value) => {
               handleSetQueryParams("js", value);
             }}

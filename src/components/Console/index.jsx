@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Log, Success, Warning, Info, Error } from "./index.style";
+import { Log, Success, Warning, Info, Error, Pre } from "./index.style";
 
 window.childConsole = {};
 
 const parentWindow = {
   log: window.console.log,
   info: window.console.info,
-  success: window.console.success,
   warn: window.console.warn,
   error: window.console.error,
 };
@@ -20,12 +19,12 @@ const Console = ({ clearConsole }) => {
 
   window.childConsole.log = (...args) => {
     handleConsole({ type: "log", value: args });
-    //parentWindow.log(...args);
+    parentWindow.log(...args);
   };
 
   window.childConsole.info = (...args) => {
     handleConsole({ type: "info", value: args });
-    //parentWindow.info(...args);
+    parentWindow.info(...args);
   };
 
   window.childConsole.success = (...args) => {
@@ -35,12 +34,12 @@ const Console = ({ clearConsole }) => {
 
   window.childConsole.warn = (...args) => {
     handleConsole({ type: "warn", value: args });
-    //parentWindow.warn(...args);
+    parentWindow.warn(...args);
   };
 
   window.childConsole.error = (...args) => {
     handleConsole({ type: "error", value: args });
-    //parentWindow.error(...args);
+    parentWindow.error(...args);
   };
 
   useEffect(() => {
@@ -74,8 +73,16 @@ const Console = ({ clearConsole }) => {
   };
 
   return (
-    <div style={{ height: "100%", overflowY: "auto" }}>
-      {consoleStatements.map((statement) => handleStatement(statement))}
+    <div
+      style={{
+        height: "100%",
+        overflowY: "auto",
+        backgroundColor: "rgb(30, 30, 30)",
+      }}
+    >
+      <Pre>
+        {consoleStatements.map((statement) => handleStatement(statement))}
+      </Pre>
     </div>
   );
 };

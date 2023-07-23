@@ -6,6 +6,7 @@ import {
   ConsolePanel,
   PreviewPanel,
   PreviewIframe,
+  ButtonContainer,
 } from "./index.style";
 import Console from "../Console";
 import createWindow from "../../utils/create-window";
@@ -40,15 +41,16 @@ const RightPanel = ({ editorValues }) => {
           <Tab value={1} label="Preview" id="simple-tab-1" />
         </Tabs>
         {value === 0 ? (
-          <Button
-            variant="contained"
-            style={{ margin: "0.5rem 0.5rem 0.5rem auto" }}
-            onClick={() => {
-              setForceUpdateConsole(!forceUpdateConsole);
-            }}
-          >
-            Clear
-          </Button>
+          <ButtonContainer>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setForceUpdateConsole(!forceUpdateConsole);
+              }}
+            >
+              Clear
+            </Button>
+          </ButtonContainer>
         ) : (
           <></>
         )}

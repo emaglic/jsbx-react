@@ -29,6 +29,7 @@ const createWindow = (iframeRef, { html, js, css }) => {
         window.console.error = parent.window.childConsole.error;
         window.console.info = parent.window.childConsole.info;
         window.console.warn = parent.window.childConsole.warn;
+        window.console.success = parent.window.childConsole.success;
 
         window.onerror = (error, url, line) => {
             parent.window.console.error(error, null, ' | line ' + line);

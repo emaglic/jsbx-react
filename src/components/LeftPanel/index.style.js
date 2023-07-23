@@ -18,4 +18,12 @@ const Section = styled("div")({
   flexGrow: 1,
 });
 
-export { Container, Header, Section };
+const ButtonContainer = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  margin: "0 0.5rem 0 auto",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export { Container, Header, Section, ButtonContainer };

@@ -1,8 +1,14 @@
 import React from "react";
-import { StyledHeader } from "./index.style";
+import { StyledHeader, Logo, LogoText } from "./index.style";
+import logo from "../../images/cube.svg";
 
 const Header = () => {
-  return <StyledHeader>JSBX2</StyledHeader>;
+  return (
+    <StyledHeader>
+      <Logo src={logo} alt="logo" />
+      <LogoText>JSBX2</LogoText>
+    </StyledHeader>
+  );
 };
 
 export default Header;

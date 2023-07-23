@@ -29,6 +29,22 @@ const PreviewIframe = styled("iframe")({
   height: "100%",
   outline: "0px",
   border: "0px",
+  backgroundColor: "#fff",
 });
 
-export { Container, Header, ConsolePanel, PreviewPanel, PreviewIframe };
+const ButtonContainer = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  margin: "0 0.5rem 0 auto",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export {
+  Container,
+  Header,
+  ConsolePanel,
+  PreviewPanel,
+  PreviewIframe,
+  ButtonContainer,
+};
