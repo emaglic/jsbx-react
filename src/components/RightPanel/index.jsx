@@ -44,6 +44,7 @@ const RightPanel = ({ editorValues }) => {
           <ButtonContainer>
             <Button
               variant="contained"
+              color="secondary"
               onClick={() => {
                 setForceUpdateConsole(!forceUpdateConsole);
               }}

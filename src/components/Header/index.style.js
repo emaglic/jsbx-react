@@ -7,7 +7,7 @@ const StyledHeader = styled("div")({
   backgroundColor: "#000",
   alignItems: "center",
   color: "#fff",
-  padding: "1rem 0.5rem",
+  padding: "0.65rem 0.5rem",
 });
 
 const Logo = styled("img")({
@@ -19,6 +19,12 @@ const Logo = styled("img")({
 const LogoText = styled("div")({
   fontFamily: "Eczar",
   fontSize: "14px",
+  display: "flex",
+  flexDirection: "row",
 });
 
-export { StyledHeader, Logo, LogoText };
+const Text = styled("p")({
+  margin: "0",
+});
+
+export { StyledHeader, Logo, LogoText, Text };
