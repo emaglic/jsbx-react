@@ -1,16 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-]);
+console.log("process.env.PUBLIC_URL: ", process.env.PUBLIC_URL);
+
+/* const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <div>Yoooooooo</div>,
+    },
+  ],
+  { basename: process.env.PUBLIC_URL }
+); */
+
+const router = createBrowserRouter(
+  createRoutesFromElements(<Route path="/" element={<App />} />),
+  { basename: process.env.PUBLIC_URL }
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
