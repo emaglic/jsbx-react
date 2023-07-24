@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Tabs, Tab, Button } from "@mui/material";
+import { Tabs, Tab, Button, IconButton } from "@mui/material";
 import {
   Container,
   Header,
@@ -10,6 +10,7 @@ import {
 } from "./index.style";
 import Console from "../Console";
 import createWindow from "../../utils/create-window";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const RightPanel = ({ editorValues }) => {
   const [value, setValue] = useState(0);
@@ -42,15 +43,15 @@ const RightPanel = ({ editorValues }) => {
         </Tabs>
         {value === 0 ? (
           <ButtonContainer>
-            <Button
+            <IconButton
               variant="contained"
               color="secondary"
               onClick={() => {
                 setForceUpdateConsole(!forceUpdateConsole);
               }}
             >
-              Clear
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </ButtonContainer>
         ) : (
           <></>

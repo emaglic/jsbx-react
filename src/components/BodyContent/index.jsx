@@ -30,9 +30,9 @@ const BodyContent = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("panelState: ", panelState);
-  }, [panelState]);
+  const importProject = (content) => {
+    console.log("content: ", content);
+  };
 
   const getStyle = () => {
     if (!panelState.right && !panelState.left) return "50% 50%";
@@ -48,10 +48,17 @@ const BodyContent = () => {
   return (
     <>
       <Container sx={{ gridTemplateColumns: `${getStyle()}` }}>
-        <LeftPanel setEditorValues={getEditorValues} />
+        <LeftPanel
+          setEditorValues={getEditorValues}
+          editorValues={editorValues}
+          importProject={importProject}
+        />
         <RightPanel editorValues={editorValues} />
       </Container>
-      <PanelControls handlePanelToggle={handlePanelToggle} />
+      <PanelControls
+        handlePanelToggle={handlePanelToggle}
+        panelState={panelState}
+      />
     </>
   );
 };

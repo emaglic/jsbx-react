@@ -48,4 +48,4 @@ const createWindow = (iframeRef, { html, js, css }) => {
   }, [100]);
 };
 
-module.exports = createWindow;
+export default createWindow;

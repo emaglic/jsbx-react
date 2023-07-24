@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
-import { Tabs, Tab, Button } from "@mui/material";
+import { Tabs, Tab, Button, IconButton } from "@mui/material";
 import { Container, Header, Section, ButtonContainer } from "./index.style";
 import html from "../../utils/default-content/html";
 import js from "../../utils/default-content/js";
 import css from "../../utils/default-content/css";
 import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ExtraMenu from "./components/ExtraMenu";
 
-const LeftPanel = ({ setEditorValues }) => {
+const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
   const [value, setValue] = useState(0);
 
   const htmlRef = useRef(null);
@@ -57,9 +59,15 @@ const LeftPanel = ({ setEditorValues }) => {
           <Tab value={2} label="JS" id="simple-tab-2" />
         </Tabs>
         <ButtonContainer>
-          <Button variant="contained" onClick={handleRun}>
-            Run
-          </Button>
+          <IconButton variant="contained" onClick={handleRun} color="success">
+            <PlayArrowIcon />
+          </IconButton>
+          {/* 
+          // Not Ready Yet
+          <ExtraMenu
+            editorValues={editorValues}
+            importProject={importProject}
+          /> */}
         </ButtonContainer>
       </Header>
       <Section>
