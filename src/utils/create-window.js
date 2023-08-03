@@ -31,9 +31,14 @@ const createWindow = (iframeRef, { html, js, css }) => {
         window.console.warn = parent.window.childConsole.warn;
         window.console.success = parent.window.childConsole.success;
 
+        // window.onerror = (error, url, line) => {
+        //    parent.window.console.error(error, null, ' | line ' + line);
+        // }
+
         window.onerror = (error, url, line) => {
-            parent.window.console.error(error, null, ' | line ' + line);
+          parent.window.childConsole.error("Error: " + error.toString() + " | Line: " + line)
         }
+
         if(window.onload) window.onload();
     `;
     const jsScript = iframeDoc.createElement("script");

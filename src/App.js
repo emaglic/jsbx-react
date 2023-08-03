@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import BodyContent from "./components/BodyContent";
 import Eczar from "./fonts/Eczar-Bold.ttf";
 import PermanentMarker from "./fonts/permanent-marker.woff2";
+import { Provider } from "react-redux";
+import { store } from "./store";
 import "./App.css";
 
 const darkTheme = createTheme({
@@ -50,21 +52,23 @@ const darkTheme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <div
-        className="App"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          gridTemplateRows: "auto 1fr",
-          height: "100vh",
-        }}
-      >
-        <Header />
-        <BodyContent />
-      </div>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <div
+          className="App"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "auto 1fr",
+            height: "100vh",
+          }}
+        >
+          <Header />
+          <BodyContent />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

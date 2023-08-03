@@ -10,8 +10,19 @@ import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ExtraMenu from "./components/ExtraMenu";
 
-const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateHTML,
+  updateCSS,
+  updateJS,
+  updateRunTimestamp,
+} from "../../store/slices/code-slice";
+
+const LeftPanel = () => {
+  const code = useSelector((state) => state.code);
   const [value, setValue] = useState(0);
+
+  const dispatch = useDispatch();
 
   const htmlRef = useRef(null);
   const cssRef = useRef(null);
@@ -19,14 +30,12 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
 
   const [queryParameters, setQueryParams] = useSearchParams();
 
-  const handleRun = () => {
-    if (!htmlRef.current || !cssRef.current || !jsRef.current) return;
-    setEditorValues({
-      runTime: new Date().getTime(),
-      html: htmlRef.current.getValue(),
-      css: cssRef.current.getValue(),
-      js: jsRef.current.getValue(),
-    });
+  const importProject = (data) => {
+    if (htmlRef.current && cssRef.current && jsRef.current) {
+      htmlRef.current.setValue(data.html);
+      cssRef.current.setValue(data.css);
+      jsRef.current.setValue(data.js);
+    }
   };
 
   const handleGetQueryParams = (type, defaultContent) => {
@@ -41,6 +50,12 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
       return params;
     });
   };
+
+  useEffect(() => {
+    dispatch(updateHTML(handleGetQueryParams("html", html)));
+    dispatch(updateCSS(handleGetQueryParams("css", css)));
+    dispatch(updateJS(handleGetQueryParams("js", js)));
+  }, []);
 
   return (
     <Container>
@@ -59,15 +74,17 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
           <Tab value={2} label="JS" id="simple-tab-2" />
         </Tabs>
         <ButtonContainer>
-          <IconButton variant="contained" onClick={handleRun} color="success">
+          <IconButton
+            variant="contained"
+            onClick={() => {
+              dispatch(updateRunTimestamp());
+            }}
+            color="success"
+          >
             <PlayArrowIcon />
           </IconButton>
-          {/* 
-          // Not Ready Yet
-          <ExtraMenu
-            editorValues={editorValues}
-            importProject={importProject}
-          /> */}
+
+          <ExtraMenu importProject={importProject} />
         </ButtonContainer>
       </Header>
       <Section>
@@ -76,8 +93,9 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
             className="editor"
             defaultLanguage="html"
             theme="vs-dark"
-            defaultValue={(() => handleGetQueryParams("html", html))()}
+            defaultValue={code.html}
             onChange={(value) => {
+              dispatch(updateHTML(value));
               handleSetQueryParams("html", value);
             }}
             onMount={(editor) => {
@@ -90,8 +108,9 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
             className="editor"
             defaultLanguage="css"
             theme="vs-dark"
-            defaultValue={(() => handleGetQueryParams("css", css))()}
+            defaultValue={code.css}
             onChange={(value) => {
+              dispatch(updateCSS(value));
               handleSetQueryParams("css", value);
             }}
             onMount={(editor) => {
@@ -104,8 +123,9 @@ const LeftPanel = ({ setEditorValues, editorValues, importProject }) => {
             className="editor"
             defaultLanguage="javascript"
             theme="vs-dark"
-            defaultValue={(() => handleGetQueryParams("js", js))()}
+            defaultValue={code.js}
             onChange={(value) => {
+              dispatch(updateJS(value));
               handleSetQueryParams("js", value);
             }}
             onMount={(editor) => {

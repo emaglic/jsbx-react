@@ -12,7 +12,11 @@ import Console from "../Console";
 import createWindow from "../../utils/create-window";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const RightPanel = ({ editorValues }) => {
+import { useDispatch, useSelector } from "react-redux";
+
+const RightPanel = () => {
+  const code = useSelector((state) => state.code);
+
   const [value, setValue] = useState(0);
   const [iframeKey, setIframeKey] = useState(new Date().getTime());
   const iframeRef = useRef();
@@ -20,10 +24,10 @@ const RightPanel = ({ editorValues }) => {
 
   useEffect(() => {
     setIframeKey(new Date().getTime());
-  }, [editorValues]);
+  }, [code.runTimestamp]);
 
   useEffect(() => {
-    createWindow(iframeRef, editorValues);
+    createWindow(iframeRef, code);
   }, [iframeKey]);
 
   return (

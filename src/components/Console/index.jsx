@@ -38,6 +38,7 @@ const Console = ({ clearConsole }) => {
   };
 
   window.childConsole.error = (...args) => {
+    console.log("args: ", args);
     handleConsole({ type: "error", value: args });
     parentWindow.error(...args);
   };

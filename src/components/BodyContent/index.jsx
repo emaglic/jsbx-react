@@ -6,16 +6,7 @@ import { Container } from "./index.style";
 
 const BodyContent = () => {
   const [panelState, setPanelState] = useState({ left: true, right: true });
-  const [editorValues, setEditorValues] = useState({
-    runTime: null,
-    html: "",
-    css: "",
-    js: "",
-  });
-
-  const getEditorValues = (values) => {
-    setEditorValues(values);
-  };
+  const [runTimestamp, setRunTimestamp] = useState(0);
 
   const handlePanelToggle = (which) => {
     if (which === "left") {
@@ -48,12 +39,8 @@ const BodyContent = () => {
   return (
     <>
       <Container sx={{ gridTemplateColumns: `${getStyle()}` }}>
-        <LeftPanel
-          setEditorValues={getEditorValues}
-          editorValues={editorValues}
-          importProject={importProject}
-        />
-        <RightPanel editorValues={editorValues} />
+        <LeftPanel importProject={importProject} />
+        <RightPanel runTimestamp={runTimestamp} />
       </Container>
       <PanelControls
         handlePanelToggle={handlePanelToggle}

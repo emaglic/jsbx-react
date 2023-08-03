@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { utf8ToBase64, base64ToUtf8 } from "../../../../utils/base64Converter";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateHTML,
+  updateCSS,
+  updateJS,
+} from "../../../../store/slices/code-slice";
+
 const ExtraMenu = ({ editorValues, importProject }) => {
+  const dispatch = useDispatch();
+  const code = useSelector((state) => state.code);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,16 +27,25 @@ const ExtraMenu = ({ editorValues, importProject }) => {
     input.onchange = (changeEvt) => {
       const reader = new FileReader();
       reader.onload = (loadEvt) => {
-        console.log(loadEvt.target.result);
-        importProject(loadEvt.target.result);
+        const json = JSON.parse(loadEvt.target.result);
+        const result = {
+          html: base64ToUtf8(json.html),
+          css: base64ToUtf8(json.css),
+          js: base64ToUtf8(json.js),
+        };
+        dispatch(updateHTML(result.html));
+        dispatch(updateCSS(result.css));
+        dispatch(updateJS(result.js));
+        importProject(result);
       };
+
       reader.readAsText(changeEvt.target.files[0]);
     };
     input.click();
   };
 
   const exportHandler = async () => {
-    const { html, css, js } = editorValues;
+    const { html, css, js } = code;
     console.log(editorValues);
     const obj = {
       html: utf8ToBase64(html),
