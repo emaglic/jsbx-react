@@ -23,6 +23,7 @@ const ExtraMenu = ({ editorValues, importProject }) => {
 
   const importHandler = () => {
     const input = document.createElement("input");
+    input.accept = ".jsbx";
     input.type = "file";
     input.onchange = (changeEvt) => {
       const reader = new FileReader();
@@ -56,7 +57,7 @@ const ExtraMenu = ({ editorValues, importProject }) => {
       type: "application/json",
     });
     const a = document.createElement("a");
-    a.download = "jsbx-project.json";
+    a.download = "jsbx-project.jsbx";
     a.href = URL.createObjectURL(blob);
     a.addEventListener("click", (e) => {
       setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
