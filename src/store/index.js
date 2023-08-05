@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import codeReducer from "./slices/code-slice";
+import editorReducer from "./slices/editor-slice";
+import uiReducer from "./slices/ui-slice";
 
 export const store = configureStore({
   reducer: {
-    code: codeReducer,
+    editor: editorReducer,
+    ui: uiReducer,
   },
 });

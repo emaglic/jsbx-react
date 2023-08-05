@@ -1,8 +1,11 @@
 import React from "react";
-import { StyledHeader, Logo, LogoText, Text } from "./index.style";
+import { StyledHeader, Logo, LogoText, Text, HeaderMenu } from "./index.style";
 import logo from "../../images/cube.svg";
+import ExtraMenu from "./components/ExtraMenu";
 
 const Header = () => {
+  const importProject = () => {};
+
   return (
     <StyledHeader>
       <Logo src={logo} alt="logo" />
@@ -18,6 +21,9 @@ const Header = () => {
           JSBX2
         </Text>
       </LogoText>
+      <HeaderMenu>
+        <ExtraMenu importProject={importProject} />
+      </HeaderMenu>
     </StyledHeader>
   );
 };

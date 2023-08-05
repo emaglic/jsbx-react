@@ -7,7 +7,7 @@ const initialState = {
   js: "",
 };
 
-const codeSlice = createSlice({
+const editorSlice = createSlice({
   name: "code",
   initialState,
   reducers: {
@@ -15,20 +15,17 @@ const codeSlice = createSlice({
       state.runTimestamp = new Date().getTime();
     },
     updateHTML: (state, action) => {
-      // console.log(action);
       state.html = action.payload;
     },
     updateCSS: (state, action) => {
-      // console.log(action);
       state.css = action.payload;
     },
     updateJS: (state, action) => {
-      // console.log(action);
       state.js = action.payload;
     },
   },
 });
 
 export const { updateHTML, updateCSS, updateJS, updateRunTimestamp } =
-  codeSlice.actions;
-export default codeSlice.reducer;
+  editorSlice.actions;
+export default editorSlice.reducer;

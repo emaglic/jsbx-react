@@ -3,26 +3,36 @@ import LeftPanel from "../LeftPanel";
 import RightPanel from "../RightPanel";
 import PanelControls from "../PanelControls";
 import { Container } from "./index.style";
+import { setPanelState } from "../../store/slices/ui-slice";
+import {
+  handleGetQueryParams,
+  handleSetQueryParams,
+} from "../../utils/query-params";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 const BodyContent = () => {
-  const [panelState, setPanelState] = useState({ left: true, right: true });
+  const [queryParams, setQueryParams] = useSearchParams();
+  const panelState = useSelector((state) => state.ui.panelState);
+  const dispatch = useDispatch();
+  // const [panelState, setPanelState] = useState({ left: true, right: true });
   const [runTimestamp, setRunTimestamp] = useState(0);
 
   const handlePanelToggle = (which) => {
+    let newState = panelState;
     if (which === "left") {
-      setPanelState((prev) => {
-        return { ...prev, left: !prev.left };
-      });
+      newState = { ...panelState, right: !panelState.right };
     }
     if (which === "right") {
-      setPanelState((prev) => {
-        return { ...prev, right: !prev.right };
-      });
+      newState = { ...panelState, left: !panelState.left };
     }
-  };
-
-  const importProject = (content) => {
-    console.log("content: ", content);
+    console.log("newState: ", newState);
+    dispatch(setPanelState(newState));
+    handleSetQueryParams(
+      setQueryParams,
+      "panelState",
+      JSON.stringify(newState)
+    );
   };
 
   const getStyle = () => {
@@ -36,10 +46,16 @@ const BodyContent = () => {
     return "50% 50%";
   };
 
+  useEffect(() => {
+    const query = handleGetQueryParams(queryParams, "panelState", null);
+    const pState = query ? JSON.parse(query) : { left: true, right: true };
+    dispatch(setPanelState(pState));
+  }, []);
+
   return (
     <>
       <Container sx={{ gridTemplateColumns: `${getStyle()}` }}>
-        <LeftPanel importProject={importProject} />
+        <LeftPanel />
         <RightPanel runTimestamp={runTimestamp} />
       </Container>
       <PanelControls

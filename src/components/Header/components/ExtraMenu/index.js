@@ -7,11 +7,19 @@ import {
   updateHTML,
   updateCSS,
   updateJS,
-} from "../../../../store/slices/code-slice";
+} from "../../../../store/slices/editor-slice";
+
+import {
+  setImportProjectTimestamp,
+  setLeftActiveTab,
+  setRightActiveTab,
+  setPanelState,
+} from "../../../../store/slices/ui-slice";
 
 const ExtraMenu = ({ editorValues, importProject }) => {
   const dispatch = useDispatch();
-  const code = useSelector((state) => state.code);
+  const code = useSelector((state) => state.editor);
+  const ui = useSelector((state) => state.ui);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -33,11 +41,28 @@ const ExtraMenu = ({ editorValues, importProject }) => {
           html: base64ToUtf8(json.html),
           css: base64ToUtf8(json.css),
           js: base64ToUtf8(json.js),
+          leftActiveTab: base64ToUtf8(json.leftActiveTab),
+          rightActiveTab: base64ToUtf8(json.rightActiveTab),
+          panelState: base64ToUtf8(json.panelState),
         };
+
         dispatch(updateHTML(result.html));
         dispatch(updateCSS(result.css));
         dispatch(updateJS(result.js));
-        importProject(result);
+
+        if (result.leftActiveTab)
+          dispatch(setLeftActiveTab(result.leftActiveTab));
+        if (result.rightActiveTab)
+          dispatch(setRightActiveTab(result.rightActiveTab));
+        if (result.panelState) dispatch(setPanelState(result.panelState));
+
+        // dispatch(setImportProjectTimestamp());
+        setTimeout(() => {
+          console.error(
+            "Don't use setTimeout to update setImportProjectTimestamp"
+          );
+          dispatch(setImportProjectTimestamp());
+        }, 500);
       };
 
       reader.readAsText(changeEvt.target.files[0]);
@@ -47,11 +72,15 @@ const ExtraMenu = ({ editorValues, importProject }) => {
 
   const exportHandler = async () => {
     const { html, css, js } = code;
-    console.log(editorValues);
+    const { leftActiveTab, rightActiveTab, panelState } = ui;
     const obj = {
+      note: "Everything here is base64 encoded",
       html: utf8ToBase64(html),
       css: utf8ToBase64(css),
       js: utf8ToBase64(js),
+      leftActiveTab: utf8ToBase64(leftActiveTab),
+      rightActiveTab: utf8ToBase64(rightActiveTab),
+      panelState: utf8ToBase64(panelState),
     };
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
       type: "application/json",

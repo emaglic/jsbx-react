@@ -1,26 +1,25 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
-import { Tabs, Tab, Button, IconButton } from "@mui/material";
+import { Tabs, Tab, IconButton } from "@mui/material";
 import { Container, Header, Section, ButtonContainer } from "./index.style";
-import html from "../../utils/default-content/html";
-import js from "../../utils/default-content/js";
-import css from "../../utils/default-content/css";
-import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import ExtraMenu from "./components/ExtraMenu";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateHTML,
   updateCSS,
   updateJS,
   updateRunTimestamp,
-} from "../../store/slices/code-slice";
+} from "../../store/slices/editor-slice";
+import { setLeftActiveTab } from "../../store/slices/ui-slice";
+import { handleSetQueryParams } from "../../utils/query-params";
 
 const LeftPanel = () => {
-  const code = useSelector((state) => state.code);
-  const [value, setValue] = useState(0);
+  const code = useSelector((state) => state.editor);
+  const importTimestamp = useSelector(
+    (state) => state.ui.importProjectTimestamp
+  );
+  const activeTab = useSelector((state) => state.ui.leftActiveTab);
 
   const dispatch = useDispatch();
 
@@ -28,50 +27,32 @@ const LeftPanel = () => {
   const cssRef = useRef(null);
   const jsRef = useRef(null);
 
-  const [queryParameters, setQueryParams] = useSearchParams();
-
-  const importProject = (data) => {
-    if (htmlRef.current && cssRef.current && jsRef.current) {
-      htmlRef.current.setValue(data.html);
-      cssRef.current.setValue(data.css);
-      jsRef.current.setValue(data.js);
-    }
-  };
-
-  const handleGetQueryParams = (type, defaultContent) => {
-    const p = queryParameters.get(type);
-    if (p) return base64ToUtf8(p);
-    return defaultContent;
-  };
-
-  const handleSetQueryParams = (type, value) => {
-    setQueryParams((params) => {
-      params.set(type, utf8ToBase64(value));
-      return params;
-    });
-  };
+  const [queryParams, setQueryParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(updateHTML(handleGetQueryParams("html", html)));
-    dispatch(updateCSS(handleGetQueryParams("css", css)));
-    dispatch(updateJS(handleGetQueryParams("js", js)));
-  }, []);
+    if (htmlRef.current && cssRef.current && jsRef.current) {
+      htmlRef.current.setValue(code.html);
+      cssRef.current.setValue(code.css);
+      jsRef.current.setValue(code.js);
+    }
+  }, [importTimestamp]);
 
   return (
     <Container>
       <Header>
         <Tabs
-          value={value}
+          value={activeTab}
           onChange={(event, newValue) => {
-            setValue(newValue);
+            dispatch(setLeftActiveTab(newValue));
+            handleSetQueryParams(setQueryParams, "lefttab", newValue);
           }}
           textColor="primary"
           indicatorColor="primary"
           aria-label="secondary tabs example"
         >
-          <Tab value={0} label="HTML" id="simple-tab-0" />
-          <Tab value={1} label="CSS" id="simple-tab-1" />
-          <Tab value={2} label="JS" id="simple-tab-2" />
+          <Tab value="html" label="HTML" id="simple-tab-0" />
+          <Tab value="css" label="CSS" id="simple-tab-1" />
+          <Tab value="js" label="JS" id="simple-tab-2" />
         </Tabs>
         <ButtonContainer>
           <IconButton
@@ -83,12 +64,14 @@ const LeftPanel = () => {
           >
             <PlayArrowIcon />
           </IconButton>
-
-          <ExtraMenu importProject={importProject} />
         </ButtonContainer>
       </Header>
       <Section>
-        <div role="tabpanel" hidden={value !== 0} style={{ height: "100%" }}>
+        <div
+          role="tabpanel"
+          hidden={activeTab !== "html"}
+          style={{ height: "100%" }}
+        >
           <Editor
             className="editor"
             defaultLanguage="html"
@@ -96,14 +79,18 @@ const LeftPanel = () => {
             defaultValue={code.html}
             onChange={(value) => {
               dispatch(updateHTML(value));
-              handleSetQueryParams("html", value);
+              handleSetQueryParams(setQueryParams, "html", value);
             }}
             onMount={(editor) => {
               htmlRef.current = editor;
             }}
           />
         </div>
-        <div role="tabpanel" hidden={value !== 1} style={{ height: "100%" }}>
+        <div
+          role="tabpanel"
+          hidden={activeTab !== "css"}
+          style={{ height: "100%" }}
+        >
           <Editor
             className="editor"
             defaultLanguage="css"
@@ -111,14 +98,18 @@ const LeftPanel = () => {
             defaultValue={code.css}
             onChange={(value) => {
               dispatch(updateCSS(value));
-              handleSetQueryParams("css", value);
+              handleSetQueryParams(setQueryParams, "css", value);
             }}
             onMount={(editor) => {
               cssRef.current = editor;
             }}
           />
         </div>
-        <div role="tabpanel" hidden={value !== 2} style={{ height: "100%" }}>
+        <div
+          role="tabpanel"
+          hidden={activeTab !== "js"}
+          style={{ height: "100%" }}
+        >
           <Editor
             className="editor"
             defaultLanguage="javascript"
@@ -126,7 +117,7 @@ const LeftPanel = () => {
             defaultValue={code.js}
             onChange={(value) => {
               dispatch(updateJS(value));
-              handleSetQueryParams("js", value);
+              handleSetQueryParams(setQueryParams, "js", value);
             }}
             onMount={(editor) => {
               jsRef.current = editor;

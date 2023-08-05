@@ -7,6 +7,7 @@ import PermanentMarker from "./fonts/permanent-marker.woff2";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import "./App.css";
+import Main from "./components/Main";
 
 const darkTheme = createTheme({
   palette: {
@@ -55,18 +56,10 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div
-          className="App"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gridTemplateRows: "auto 1fr",
-            height: "100vh",
-          }}
-        >
+        <Main>
           <Header />
           <BodyContent />
-        </div>
+        </Main>
       </ThemeProvider>
     </Provider>
   );

@@ -27,4 +27,8 @@ const Text = styled("p")({
   margin: "0",
 });
 
-export { StyledHeader, Logo, LogoText, Text };
+const HeaderMenu = styled("div")({
+  marginLeft: "auto",
+});
+
+export { StyledHeader, Logo, LogoText, Text, HeaderMenu };
