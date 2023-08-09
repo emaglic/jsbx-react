@@ -1,7 +1,10 @@
 const html = /*html*/ `<!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <JSBX-CSS>
+    </head>
     <body>
+        <JSBX-JS>
     </body>
 </html>
 `;

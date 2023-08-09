@@ -15,6 +15,7 @@ import {
   setRightActiveTab,
   setPanelState,
 } from "../../../../store/slices/ui-slice";
+import { compiledHTMLFile } from "../../../../utils/save-compiled-html";
 
 const ExtraMenu = ({ editorValues, importProject }) => {
   const dispatch = useDispatch();
@@ -85,12 +86,25 @@ const ExtraMenu = ({ editorValues, importProject }) => {
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
       type: "application/json",
     });
-    const a = document.createElement("a");
-    a.download = "jsbx-project.jsbx";
-    a.href = URL.createObjectURL(blob);
-    a.addEventListener("click", (e) => {
-      setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
+    downloadFile(blob, "jsbx-project", "jsbx");
+  };
+
+  const exportAsHTMLFile = () => {
+    const { html, css, js } = code;
+    const result = compiledHTMLFile(html, css, js);
+    const blob = new Blob([result], {
+      type: "text/html",
     });
+    downloadFile(blob, "jsbx-compiled-html", "html");
+  };
+
+  const downloadFile = (blob, filename, extension) => {
+    const a = document.createElement("a");
+    a.download = `${filename}.${extension}`;
+    a.href = URL.createObjectURL(blob);
+    a.onClick = () => {
+      setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
+    };
     a.click();
   };
 
@@ -116,6 +130,7 @@ const ExtraMenu = ({ editorValues, importProject }) => {
       >
         <MenuItem onClick={importHandler}>Import Project</MenuItem>
         <MenuItem onClick={exportHandler}>Export Project</MenuItem>
+        <MenuItem onClick={exportAsHTMLFile}>Save as HTML</MenuItem>
       </Menu>
     </div>
   );

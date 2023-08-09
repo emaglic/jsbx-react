@@ -3,13 +3,26 @@ let interval = null;
 const createWindow = (iframeRef, { html, js, css }) => {
   clearInterval(interval);
 
+  // Do some fancy stuff to replace the <JSBX-CSS> and <JSBX-JS> tags in the html string
+  // Note: <JSBX-JS> is an emtpy script with an id of jsbx-js, it is later replaced with the actual script contents.
+  // ---------------------------------------------------------------------
+  let _html = html;
+  _html = _html.replace(
+    "<JSBX-CSS>",
+    `
+    <style id='jsbx-css'>${css}</style>
+  `
+  );
+  _html = _html.replace("<JSBX-JS>", `<script id='jsbx-js'></script>`);
+  // ---------------------------------------------------------------------
+
   const ifrm =
     iframeRef.current.contentWindow ||
     iframeRef.current.contentDocument.document ||
     iframeRef.current.contentDocument;
   const iframeDoc = ifrm.document;
   iframeDoc.open();
-  iframeDoc.write(html);
+  iframeDoc.write(_html);
   iframeDoc.close();
 
   interval = setInterval(() => {
@@ -18,10 +31,6 @@ const createWindow = (iframeRef, { html, js, css }) => {
       console.log(iframeDoc.body);
       return;
     } else clearInterval(interval);
-
-    const style = iframeDoc.createElement("style");
-    style.innerHTML = css;
-    iframeDoc.head.appendChild(style);
 
     const injectScript = iframeDoc.createElement("script");
     injectScript.innerHTML = /*javascript*/ `
@@ -41,15 +50,19 @@ const createWindow = (iframeRef, { html, js, css }) => {
 
         if(window.onload) window.onload();
     `;
-    const jsScript = iframeDoc.createElement("script");
-    jsScript.innerHTML = /*javascript*/ `
-    (() => {
-        ${js}
-    })()
-    `;
 
-    iframeDoc.body.appendChild(injectScript);
-    iframeDoc.body.appendChild(jsScript);
+    iframeDoc.head.prepend(injectScript);
+
+    const jsScript = iframeDoc.querySelector("#jsbx-js");
+    if (jsScript) {
+      const script = iframeDoc.createElement("script");
+      script.innerHTML = /*javascript*/ `
+      (() => {
+          ${js}
+       })()
+      `;
+      jsScript.replaceWith(script);
+    }
   }, [100]);
 };
 
