@@ -17,29 +17,30 @@ const Console = ({ clearConsole }) => {
     setConsoleStatements((prev) => [...prev, statement]);
   };
 
+  const parseArgs = (args) => {
+    return args.map((arg) => {
+      if(typeof arg === "object") return JSON.stringify(arg, null, 2);
+      return arg;
+    }).join('')
+  }
+
   window.childConsole.log = (...args) => {
-    handleConsole({ type: "log", value: args });
+    handleConsole({ type: "log", value: parseArgs(args) });
     parentWindow.log(...args);
   };
 
   window.childConsole.info = (...args) => {
-    handleConsole({ type: "info", value: args });
+    handleConsole({ type: "info", value: parseArgs(args) });
     parentWindow.info(...args);
   };
 
-  window.childConsole.success = (...args) => {
-    handleConsole({ type: "success", value: args });
-    //parentWindow.success(...args);
-  };
-
   window.childConsole.warn = (...args) => {
-    handleConsole({ type: "warn", value: args });
+    handleConsole({ type: "warn", value: parseArgs(args) });
     parentWindow.warn(...args);
   };
 
   window.childConsole.error = (...args) => {
-    console.log("args: ", args);
-    handleConsole({ type: "error", value: args });
+    handleConsole({ type: "error", value: parseArgs(args) });
     parentWindow.error(...args);
   };
 
@@ -47,29 +48,24 @@ const Console = ({ clearConsole }) => {
     setConsoleStatements([]);
   }, [clearConsole]);
 
-  const handleValue = (value) => {
-    if (typeof value === "object") return JSON.stringify(...value, null, 2);
-    return value.toString();
-  };
-
   const handleStatement = (statement) => {
     const value = statement.value;
     const random = Math.random() * Math.random();
     switch (statement.type) {
       case "log":
-        return <Log key={random}>{handleValue(value)}</Log>;
+        return <Log key={random}>{value}</Log>;
 
       case "info":
-        return <Info key={random}>{handleValue(value)}</Info>;
+        return <Info key={random}>{value}</Info>;
 
       case "success":
-        return <Success key={random}>{handleValue(value)}</Success>;
+        return <Success key={random}>{value}</Success>;
 
       case "warn":
-        return <Warning key={random}>{handleValue(value)}</Warning>;
+        return <Warning key={random}>{value}</Warning>;
 
       case "error":
-        return <Error key={random}>{handleValue(value)}</Error>;
+        return <Error key={random}>{value}</Error>;
     }
   };
 

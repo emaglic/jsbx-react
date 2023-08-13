@@ -29,6 +29,8 @@ const Text = styled("p")({
 
 const HeaderMenu = styled("div")({
   marginLeft: "auto",
+  display: 'flex',
+  flexDirection: 'row',
 });
 
 export { StyledHeader, Logo, LogoText, Text, HeaderMenu };

@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyledHeader, Logo, LogoText, Text, HeaderMenu } from "./index.style";
 import logo from "../../images/cube.svg";
 import ExtraMenu from "./components/ExtraMenu";
+import HelpMenu from './components/HelpMenu';
 
 const Header = () => {
   const importProject = () => {};
@@ -22,6 +23,7 @@ const Header = () => {
         </Text>
       </LogoText>
       <HeaderMenu>
+        <HelpMenu/>
         <ExtraMenu importProject={importProject} />
       </HeaderMenu>
     </StyledHeader>
