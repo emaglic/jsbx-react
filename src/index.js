@@ -10,18 +10,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-console.log("process.env.PUBLIC_URL: ", process.env.PUBLIC_URL);
-
-/* const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <div>Yoooooooo</div>,
-    },
-  ],
-  { basename: process.env.PUBLIC_URL }
-); */
-
 const router = createBrowserRouter(
   createRoutesFromElements(<Route path="/" element={<App />} />),
   { basename: process.env.PUBLIC_URL }
