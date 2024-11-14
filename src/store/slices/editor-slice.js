@@ -5,6 +5,7 @@ const initialState = {
   html: "",
   css: "",
   js: "",
+  htmlPage: "",
 };
 
 const editorSlice = createSlice({
@@ -23,9 +24,17 @@ const editorSlice = createSlice({
     updateJS: (state, action) => {
       state.js = action.payload;
     },
+    updateHTMLPage: (state, action) => {
+      state.htmlPage = action.payload;
+    },
   },
 });
 
-export const { updateHTML, updateCSS, updateJS, updateRunTimestamp } =
-  editorSlice.actions;
+export const {
+  updateHTML,
+  updateCSS,
+  updateJS,
+  updateRunTimestamp,
+  updateHTMLPage,
+} = editorSlice.actions;
 export default editorSlice.reducer;

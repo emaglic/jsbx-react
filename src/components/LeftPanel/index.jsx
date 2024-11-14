@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
 import { Tabs, Tab, IconButton } from "@mui/material";
 import { Container, Header, Section, ButtonContainer } from "./index.style";

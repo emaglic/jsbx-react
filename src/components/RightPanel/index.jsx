@@ -12,6 +12,7 @@ import Console from "../Console";
 import createWindow from "../../utils/create-window";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setRightActiveTab } from "../../store/slices/ui-slice";
+import { updateHTMLPage } from "../../store/slices/editor-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { handleSetQueryParams } from "../../utils/query-params";
@@ -27,6 +28,23 @@ const RightPanel = () => {
   useEffect(() => {
     createWindow(iframeRef, code);
   }, [code.runTimestamp]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (
+        iframeRef?.current?.contentWindow?.document?.documentElement.outerHTML
+      ) {
+        const htmlStr =
+          iframeRef?.current?.contentWindow?.document?.documentElement
+            .outerHTML;
+        dispatch(updateHTMLPage(htmlStr));
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [iframeRef?.current?.contentWindow?.document?.lastModified]);
 
   return (
     <Container>

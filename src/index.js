@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   RouterProvider,
   Route,
@@ -10,9 +10,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<App />} />),
-  { basename: process.env.PUBLIC_URL }
+const router = createHashRouter(
+  createRoutesFromElements(<Route path="/" element={<App />} />)
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

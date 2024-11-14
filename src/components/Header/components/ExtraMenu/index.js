@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { Button, Menu, MenuItem, IconButton } from "@mui/material";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  IconButton,
+  ListSubheader,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SaveIcon from "@mui/icons-material/Save";
 import { utf8ToBase64, base64ToUtf8 } from "../../../../utils/base64Converter";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -57,11 +64,8 @@ const ExtraMenu = ({ editorValues, importProject }) => {
           dispatch(setRightActiveTab(result.rightActiveTab));
         if (result.panelState) dispatch(setPanelState(result.panelState));
 
-        // dispatch(setImportProjectTimestamp());
+        // Fix: Don't use setTimeout to update setImportProjectTimestamp
         setTimeout(() => {
-          console.error(
-            "Don't use setTimeout to update setImportProjectTimestamp"
-          );
           dispatch(setImportProjectTimestamp());
         }, 500);
       };
@@ -90,8 +94,8 @@ const ExtraMenu = ({ editorValues, importProject }) => {
   };
 
   const exportAsHTMLFile = () => {
-    const { html, css, js } = code;
-    const result = compiledHTMLFile(html, css, js);
+    dispatch(setImportProjectTimestamp());
+    const result = code.htmlPage;
     const blob = new Blob([result], {
       type: "text/html",
     });
@@ -117,17 +121,34 @@ const ExtraMenu = ({ editorValues, importProject }) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <MoreVertIcon />
+        <SaveIcon />
       </IconButton>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        slotProps={{
+          paper: {
+            sx: { border: "1px solid #fff" },
+          },
+        }}
         MenuListProps={{
           "aria-labelledby": "basic-button",
+          sx: {
+            paddingTop: 0,
+          },
         }}
       >
+        <ListSubheader
+          sx={{
+            backgroundColor: "#000",
+            color: "rgba(255,255,255,0.7)",
+            lineHeight: "2.5rem",
+          }}
+        >
+          MANAGE PROJECT
+        </ListSubheader>
         <MenuItem onClick={importHandler}>Import Project</MenuItem>
         <MenuItem onClick={exportHandler}>Export Project</MenuItem>
         <MenuItem onClick={exportAsHTMLFile}>Save as HTML</MenuItem>

@@ -21,12 +21,12 @@ const BodyContent = () => {
   const handlePanelToggle = (which) => {
     let newState = panelState;
     if (which === "left") {
-      newState = { right: true, left: !panelState.left  };
+      newState = { right: true, left: !panelState.left };
     }
     if (which === "right") {
       newState = { right: !panelState.right, left: true };
     }
-    console.log("newState: ", newState);
+
     dispatch(setPanelState(newState));
     handleSetQueryParams(
       setQueryParams,

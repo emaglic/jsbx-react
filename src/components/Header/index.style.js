@@ -7,30 +7,34 @@ const StyledHeader = styled("div")({
   backgroundColor: "#000",
   alignItems: "center",
   color: "#fff",
-  padding: "0.65rem 0.5rem",
+  padding: "0.25rem 0.5rem",
 });
 
 const Logo = styled("img")({
-  maxHeight: "22px",
-  width: "auto",
+  height: "25px",
+  width: "25px",
   marginRight: "0.25rem",
 });
 
 const LogoText = styled("div")({
-  fontFamily: "Eczar",
-  fontSize: "14px",
   display: "flex",
   flexDirection: "row",
+  alignItems: "center",
 });
 
 const Text = styled("p")({
   margin: "0",
+  // fontFamily: "Permanent-Marker",
+  fontFamily: "Eczar",
+  marginLeft: "0.25rem",
+  fontSize: "1.25rem",
+  letterSpacing: "0px",
 });
 
 const HeaderMenu = styled("div")({
   marginLeft: "auto",
-  display: 'flex',
-  flexDirection: 'row',
+  display: "flex",
+  flexDirection: "row",
 });
 
 export { StyledHeader, Logo, LogoText, Text, HeaderMenu };
