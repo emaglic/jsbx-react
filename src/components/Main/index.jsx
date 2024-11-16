@@ -5,6 +5,7 @@ import {
   updateHTML,
   updateCSS,
   updateJS,
+  updateJSSuperset,
 } from "../../store/slices/editor-slice";
 import {
   setLeftActiveTab,
@@ -23,6 +24,11 @@ const Main = (props) => {
     dispatch(updateHTML(handleGetQueryParams(queryParams, "html", html)));
     dispatch(updateCSS(handleGetQueryParams(queryParams, "css", css)));
     dispatch(updateJS(handleGetQueryParams(queryParams, "js", js)));
+    dispatch(
+      updateJSSuperset(
+        handleGetQueryParams(queryParams, "jssuperset", "javascript")
+      )
+    );
     dispatch(
       setLeftActiveTab(handleGetQueryParams(queryParams, "lefttab", "html"))
     );

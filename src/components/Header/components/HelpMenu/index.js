@@ -14,6 +14,10 @@ import HelpIcon from "@mui/icons-material/Help";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DialogBody, DialogHeader } from "./index.style";
+import presets from "../PresetMenu/presets";
+
+const pemamentMarkerColor = "#90caf9";
+
 const HelpMenu = () => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -39,7 +43,11 @@ const HelpMenu = () => {
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
             <Typography
-              sx={{ ml: 1, flex: 1, fontFamily: "Permanent-Marker" }}
+              sx={{
+                ml: 1,
+                flex: 1,
+                fontFamily: "Permanent-Marker",
+              }}
               variant="h4"
               component="div"
             >
@@ -62,7 +70,12 @@ const HelpMenu = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography sx={{ fontFamily: "Permanent-Marker" }} variant="h5">
+              <Typography
+                sx={{
+                  fontFamily: "Permanent-Marker",
+                }}
+                variant="h5"
+              >
                 Overview
               </Typography>
             </AccordionSummary>
@@ -81,7 +94,12 @@ const HelpMenu = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography sx={{ fontFamily: "Permanent-Marker" }} variant="h5">
+              <Typography
+                sx={{
+                  fontFamily: "Permanent-Marker",
+                }}
+                variant="h5"
+              >
                 Usage
               </Typography>
             </AccordionSummary>
@@ -90,6 +108,7 @@ const HelpMenu = () => {
                 sx={{
                   flex: 1,
                   fontFamily: "Permanent-Marker",
+                  color: pemamentMarkerColor,
                   marginBottom: "1rem",
                 }}
                 variant="h5"
@@ -113,6 +132,7 @@ const HelpMenu = () => {
                     sx={{
                       flex: 1,
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                     }}
                     variant="h6"
                     component="div"
@@ -131,41 +151,81 @@ const HelpMenu = () => {
                       <li>
                         <Typography
                           variant="h6"
-                          sx={{ fontFamily: "Permanent-Marker" }}
+                          sx={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
                         >
                           Dependencies
                         </Typography>
                         Like any HTML page, you can use{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;link&gt;
                         </bold>{" "}
                         and{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;script&gt;
                         </bold>{" "}
                         tags to load external dependencies.
                         <ul>
                           <li style={{ marginTop: "1rem" }}>
-                            JSBX also has some preset environments available,
-                            such as one for React+Babel, see the preset options
-                            in the menu at the top-right.
+                            JSBX also has some preset environments available.
+                            You can see them listed below, or you can access
+                            them at any time through the preset menu at the
+                            top-right of the page
+                            <ul style={{ marginTop: "0.5rem" }}>
+                              {presets.map((preset) => (
+                                <li key={preset.label}>
+                                  <a
+                                    style={{ color: "#90caf9" }}
+                                    href={preset.url}
+                                    target="_blank"
+                                  >
+                                    {preset.label}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
                           </li>
                         </ul>
                       </li>
                       <li>
                         <Typography
                           variant="h6"
-                          sx={{ fontFamily: "Permanent-Marker" }}
+                          sx={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
                         >
                           Styles (CSS)
                         </Typography>
                         Your styles from the CSS tab can be injected into the
                         compiled HTML page using the custom{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;jsbx-css&gt;
                         </bold>{" "}
                         element. You can place this{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;jsbx-css&gt;
                         </bold>{" "}
                         element in your HTML wherever you would like your styles
@@ -174,13 +234,21 @@ const HelpMenu = () => {
                       <li>
                         <Typography
                           variant="h6"
-                          sx={{ fontFamily: "Permanent-Marker" }}
+                          sx={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
                         >
                           JavaScript (JS)
                         </Typography>
                         Your JavaScript from the JS tab can be injected into the
                         compiled HTML using the custom{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;jsbx-js&gt;
                         </bold>{" "}
                         element. You can move this custom element around in
@@ -189,41 +257,195 @@ const HelpMenu = () => {
                         <br />
                         <br />
                         The{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;jsbx-js&gt;
                         </bold>{" "}
                         element supports 2 attributes:
                         <ol>
                           <li>
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               type
                             </bold>
                             : This indicates the type of script contained within
                             the script block. With vanilla JS this is usually{" "}
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               "text/javascript"
                             </bold>
                             . However JSBX supports Babel (if loaded with a CDN
                             link). If you are using Babel, you can set the type
                             to{" "}
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               "text/babel"
                             </bold>
                           </li>
                           <li>
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               presets
                             </bold>
                             : When type has been set as{" "}
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               "text/babel"
                             </bold>
                             , the presets attribute indicates the Babel presets
                             to use. If type is not{" "}
-                            <bold style={{ fontFamily: "Permanent-Marker" }}>
+                            <bold
+                              style={{
+                                fontFamily: "Permanent-Marker",
+                                color: pemamentMarkerColor,
+                              }}
+                            >
                               "text/babel"
                             </bold>{" "}
                             this attribute is ignored.{" "}
+                          </li>
+                        </ol>
+                      </li>
+                    </ul>
+                  </Typography>
+                </li>
+
+                <li>
+                  <Typography
+                    sx={{
+                      flex: 1,
+                      fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
+                      marginTop: "1rem",
+                    }}
+                    variant="h6"
+                    component="div"
+                  >
+                    JS Editor
+                  </Typography>
+                  <Typography>
+                    <ul
+                      style={{
+                        listStyleType: "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "1rem",
+                        marginTop: "0.5rem",
+                      }}
+                    >
+                      <li>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          JS Superset{" - "}
+                          <bold style={{ color: "red" }}>(Experimental)</bold>
+                        </Typography>
+                        <bold
+                          style={{
+                            color: "red",
+                            backgroundColor: "rgba(0,0,0,0.5)",
+                            padding: "1rem",
+                          }}
+                        >
+                          Typescript syntax highlighting and intellisense is
+                          experimental right now in JSBX, so don't be surprised
+                          if you encounter unexpected errors, such as parts of
+                          your code being flagged as Typescript errors when they
+                          shouldn't be.
+                        </bold>
+                        <br />
+                        <br />
+                        When the JS tab is selected, you have the ability to
+                        toggle between writing JavaScript or Typescript code
+                        using the dropdown menu at the top-right of the JS
+                        editor toolbar.
+                        <br />
+                        <br />
+                        Note that this only changes the way intellisense and
+                        syntax highlighting works in the JS editor, and does not
+                        effect how code is compiled and run in the Preview
+                        panel.
+                        <br />
+                        <br />
+                        In order to compile Typescript code to run in the
+                        Preview panel, you must:
+                        <ol style={{ marginTop: "1rem" }}>
+                          <li>
+                            Import Babel from a CDN via a script tag in your
+                            HTML code (in the HTML editor)
+                            <ul
+                              style={{
+                                listStyleType: "none",
+
+                                fontFamily: "monospace",
+                                padding: "0.5rem",
+                              }}
+                            >
+                              <li
+                                style={{
+                                  backgroundColor: "rgba(0,0,0,0.5)",
+                                  color: "#fff",
+                                  padding: "0.5rem",
+                                }}
+                              >
+                                &lt;script
+                                src="https://unpkg.com/@babel/standalone/babel.min.js"
+                                crossorigin&gt;&lt;/script&gt;
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Set your &lt;jsbx-js&gt; tag (in the HTML editor) to
+                            have the following attributes{" "}
+                            <bold>type="text/babel"</bold> &{" "}
+                            <bold>presets="typescript"</bold>
+                            <ul
+                              style={{
+                                padding: "0.5rem",
+                                listStyleType: "none",
+                              }}
+                            >
+                              <li
+                                style={{
+                                  backgroundColor: "rgba(0,0,0,0.5)",
+                                  color: "#fff",
+                                  padding: "0.5rem",
+                                  fontFamily: "monospace",
+                                }}
+                              >
+                                &lt;jsbx-js type="text/babel"
+                                presets="typescript"&gt;
+                              </li>
+                            </ul>
                           </li>
                         </ol>
                       </li>
@@ -235,6 +457,7 @@ const HelpMenu = () => {
                 sx={{
                   flex: 1,
                   fontFamily: "Permanent-Marker",
+                  color: pemamentMarkerColor,
                   marginBottom: "1rem",
                 }}
                 variant="h5"
@@ -256,6 +479,7 @@ const HelpMenu = () => {
                     sx={{
                       flex: 1,
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                       marginBottom: "1rem",
                     }}
                     variant="h6"
@@ -278,6 +502,7 @@ const HelpMenu = () => {
                         <Typography
                           sx={{
                             fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
                           }}
                           component="div"
                         >
@@ -290,6 +515,7 @@ const HelpMenu = () => {
                         <Typography
                           sx={{
                             fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
                           }}
                           component="div"
                         >
@@ -306,6 +532,7 @@ const HelpMenu = () => {
                     sx={{
                       flex: 1,
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                       marginBottom: "1rem",
                     }}
                     variant="h6"
@@ -323,7 +550,12 @@ const HelpMenu = () => {
                     >
                       <li>
                         Renders your compiled HTML/CSS & JS Code in an isolated{" "}
-                        <bold style={{ fontFamily: "Permanent-Marker" }}>
+                        <bold
+                          style={{
+                            fontFamily: "Permanent-Marker",
+                            color: pemamentMarkerColor,
+                          }}
+                        >
                           &lt;iframe&gt;
                         </bold>{" "}
                         environment
@@ -341,7 +573,12 @@ const HelpMenu = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography variant="h5" sx={{ fontFamily: "Permanent-Marker" }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: "Permanent-Marker",
+                }}
+              >
                 Security
               </Typography>
             </AccordionSummary>
@@ -352,6 +589,7 @@ const HelpMenu = () => {
                     variant="h6"
                     sx={{
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -366,6 +604,7 @@ const HelpMenu = () => {
                     variant="h6"
                     sx={{
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -385,7 +624,12 @@ const HelpMenu = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography variant="h5" sx={{ fontFamily: "Permanent-Marker" }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: "Permanent-Marker",
+                }}
+              >
                 Saving and Sharing
               </Typography>
             </AccordionSummary>
@@ -395,7 +639,11 @@ const HelpMenu = () => {
                 the URL.
               </p>
               <Typography
-                sx={{ flex: 1, fontFamily: "Permanent-Marker" }}
+                sx={{
+                  flex: 1,
+                  fontFamily: "Permanent-Marker",
+                  color: pemamentMarkerColor,
+                }}
                 variant="h6"
                 component="div"
               >
@@ -411,7 +659,11 @@ const HelpMenu = () => {
                 </li>
               </ol>
               <Typography
-                sx={{ flex: 1, fontFamily: "Permanent-Marker" }}
+                sx={{
+                  flex: 1,
+                  fontFamily: "Permanent-Marker",
+                  color: pemamentMarkerColor,
+                }}
                 variant="h6"
                 component="div"
               >
@@ -436,6 +688,7 @@ const HelpMenu = () => {
                   <Typography
                     sx={{
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                     }}
                     component="div"
                   >
@@ -448,6 +701,7 @@ const HelpMenu = () => {
                   <Typography
                     sx={{
                       fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
                     }}
                     component="div"
                   >
@@ -459,7 +713,11 @@ const HelpMenu = () => {
                 </li>
               </ul>
               <Typography
-                sx={{ flex: 1, fontFamily: "Permanent-Marker" }}
+                sx={{
+                  flex: 1,
+                  fontFamily: "Permanent-Marker",
+                  color: pemamentMarkerColor,
+                }}
                 variant="h6"
                 component="div"
               >
@@ -468,7 +726,14 @@ const HelpMenu = () => {
               <p>
                 To help combat the limitations of lengthy URL query params, JSBX
                 allows you to export (as well as import) a project as a{" "}
-                <bold style={{ fontFamily: "Permanent-Marker" }}>.jsbx </bold>
+                <bold
+                  style={{
+                    fontFamily: "Permanent-Marker",
+                    color: pemamentMarkerColor,
+                  }}
+                >
+                  .jsbx{" "}
+                </bold>
                 file.
               </p>
               <ul
@@ -481,7 +746,11 @@ const HelpMenu = () => {
               >
                 <li>
                   <Typography
-                    sx={{ flex: 1, fontFamily: "Permanent-Marker" }}
+                    sx={{
+                      flex: 1,
+                      fontFamily: "Permanent-Marker",
+                      color: pemamentMarkerColor,
+                    }}
                     variant="h6"
                     component="div"
                   >

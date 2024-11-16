@@ -1,7 +1,18 @@
-import React, { useRef, useEffect } from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import React, { useRef, useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
 import { useSearchParams } from "react-router-dom";
-import { Tabs, Tab, IconButton } from "@mui/material";
+import {
+  Tabs,
+  Tab,
+  IconButton,
+  Box,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { Container, Header, Section, ButtonContainer } from "./index.style";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +23,7 @@ import {
   updateRunTimestamp,
 } from "../../store/slices/editor-slice";
 import { setLeftActiveTab } from "../../store/slices/ui-slice";
+import { updateJSSuperset } from "../../store/slices/editor-slice";
 import { handleSetQueryParams } from "../../utils/query-params";
 
 const LeftPanel = () => {
@@ -19,6 +31,7 @@ const LeftPanel = () => {
   const importTimestamp = useSelector(
     (state) => state.ui.importProjectTimestamp
   );
+  const jsSuperset = useSelector((state) => state.editor.jsSuperset);
   const activeTab = useSelector((state) => state.ui.leftActiveTab);
 
   const dispatch = useDispatch();
@@ -29,6 +42,9 @@ const LeftPanel = () => {
 
   const [queryParams, setQueryParams] = useSearchParams();
 
+  const [jsMonacoObj, setJSMonacoObj] = useState(undefined);
+  const [jsSnackbarOpen, setJSSnackbarOpen] = useState(false);
+
   useEffect(() => {
     if (htmlRef.current && cssRef.current && jsRef.current) {
       htmlRef.current.setValue(code.html);
@@ -36,6 +52,25 @@ const LeftPanel = () => {
       jsRef.current.setValue(code.js);
     }
   }, [importTimestamp]);
+
+  const configureTypeScript = (monaco) => {
+    if (jsSuperset === "typescript") {
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        jsx: monaco.languages.typescript.JsxEmit.React, // Enable JSX
+        allowJs: true,
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        noImplicitAny: true, // Enable noImplicitAny
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (jsSuperset === "typescript") setJSSnackbarOpen(true);
+    if (!jsRef.current?.getModel() || !jsMonacoObj) return;
+    const model = jsRef.current.getModel();
+    jsMonacoObj.editor.setModelLanguage(model, jsSuperset);
+    configureTypeScript(jsMonacoObj);
+  }, [jsSuperset, jsMonacoObj]);
 
   return (
     <Container>
@@ -54,17 +89,66 @@ const LeftPanel = () => {
           <Tab value="css" label="CSS" id="simple-tab-1" />
           <Tab value="js" label="JS" id="simple-tab-2" />
         </Tabs>
-        <ButtonContainer>
-          <IconButton
-            variant="contained"
-            onClick={() => {
-              dispatch(updateRunTimestamp());
-            }}
-            color="success"
-          >
-            <PlayArrowIcon />
-          </IconButton>
-        </ButtonContainer>
+        <Box
+          sx={{
+            marginLeft: "auto",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          {activeTab === "js" && (
+            <FormControl>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={jsSuperset}
+                size="small"
+                onChange={(evt) => {
+                  dispatch(updateJSSuperset(evt.target.value));
+                  handleSetQueryParams(
+                    setQueryParams,
+                    "jssuperset",
+                    evt.target.value
+                  );
+                }}
+              >
+                <MenuItem value={"javascript"}>Javascript</MenuItem>
+                <MenuItem value={"typescript"}>Typescript</MenuItem>
+              </Select>
+              <Snackbar
+                open={jsSnackbarOpen}
+                autoHideDuration={6000}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                onClose={() => {
+                  setJSSnackbarOpen(false);
+                }}
+              >
+                <Alert
+                  onClose={() => {
+                    setJSSnackbarOpen(false);
+                  }}
+                  severity="warning"
+                  variant="filled"
+                  sx={{ width: "100%" }}
+                >
+                  Using Typescript requires linking Babel via CDN in HTML
+                </Alert>
+              </Snackbar>
+            </FormControl>
+          )}
+          <ButtonContainer>
+            <IconButton
+              variant="contained"
+              onClick={() => {
+                dispatch(updateRunTimestamp());
+              }}
+              color="success"
+            >
+              <PlayArrowIcon />
+            </IconButton>
+          </ButtonContainer>
+        </Box>
       </Header>
       <Section>
         <div
@@ -112,15 +196,20 @@ const LeftPanel = () => {
         >
           <Editor
             className="editor"
-            defaultLanguage="javascript"
+            defaultLanguage={jsSuperset} // Dynamically set initial language
+            path="file.tsx" // Use .tsx extension to help Monaco understand JSX syntax
             theme="vs-dark"
             defaultValue={code.js}
             onChange={(value) => {
               dispatch(updateJS(value));
               handleSetQueryParams(setQueryParams, "js", value);
             }}
-            onMount={(editor) => {
+            onMount={(editor, monaco) => {
               jsRef.current = editor;
+              setJSMonacoObj(monaco);
+
+              // Apply TypeScript-specific configuration if needed
+              configureTypeScript(monaco);
             }}
           />
         </div>

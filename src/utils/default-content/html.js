@@ -1,10 +1,10 @@
 const html = /*html*/ `<!DOCTYPE html>
 <html>
     <head>
-        <JSBX-CSS>
+        <jsbx-css>
     </head>
     <body>
-        <JSBX-JS>
+        <jsbx-js>
     </body>
 </html>
 `;

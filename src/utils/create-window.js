@@ -6,6 +6,16 @@ const replaceStrings = (originalString, regex, replaceValue) => {
   return result;
 };
 
+// Get defaultLanguage prop for JS Editor. This is for use with Typescript.
+const getLanguage = (js) => {
+  const regex = undefined;
+  const matches = js.match(regex);
+  if (matches) {
+    return matches[1] || matches[2];
+  }
+  return "javascript";
+};
+
 const getBabelPreset = (js) => {
   const regex = /<\s*jsbx-js\s+[^>]*presets=["']([^"']+)["']\s*\/?\s*>/i;
 
@@ -110,7 +120,7 @@ const createWindow = (iframeRef, { html, js, css }) => {
         const script = document.getElementById('jsbx-js');
         const code = script.textContent;
         const babelPresets = "${babelPresetString}" ? "${babelPresetString}".split(',').map((str) => str.trim()).filter((str) => str) : undefined;
-        const options = babelPresets ? { presets: babelPresets} : {};
+        const options = babelPresets ? { presets: babelPresets, filename: 'jsbx-js.tsx'} : {};
         const transpiledCode = Babel.transform(code, options).code;
         new Function(transpiledCode)();
         })()

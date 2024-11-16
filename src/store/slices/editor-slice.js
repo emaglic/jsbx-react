@@ -6,6 +6,7 @@ const initialState = {
   css: "",
   js: "",
   htmlPage: "",
+  jsSuperset: "javascript",
 };
 
 const editorSlice = createSlice({
@@ -27,6 +28,9 @@ const editorSlice = createSlice({
     updateHTMLPage: (state, action) => {
       state.htmlPage = action.payload;
     },
+    updateJSSuperset: (state, action) => {
+      state.jsSuperset = action.payload;
+    },
   },
 });
 
@@ -36,5 +40,6 @@ export const {
   updateJS,
   updateRunTimestamp,
   updateHTMLPage,
+  updateJSSuperset,
 } = editorSlice.actions;
 export default editorSlice.reducer;
