@@ -38,6 +38,7 @@ const ExtraMenu = ({ editorValues, importProject }) => {
 
   const navigate = (url) => {
     window.location.href = url;
+    window.location.reload();
   };
 
   return (

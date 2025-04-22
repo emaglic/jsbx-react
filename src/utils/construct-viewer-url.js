@@ -5,7 +5,7 @@ const constructViewerURL = ({ html, css, js }) => {
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : "https://eben.design/static/tools/jsbx2";
-  const url = `${origin}/#/viewer/?html=${utf8ToBase64(
+  const url = `${process.env.REACT_APP_BASE_URL}/#/viewer/?html=${utf8ToBase64(
     html
   )}&css=${utf8ToBase64(css)}&js=${utf8ToBase64(js)}`;
   return url;
