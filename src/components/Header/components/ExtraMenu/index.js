@@ -80,13 +80,13 @@ const ExtraMenu = ({ editorValues, importProject }) => {
     const { html, css, js } = code;
     const { leftActiveTab, rightActiveTab, panelState } = ui;
     const obj = {
-      note: "Everything here is base64 encoded",
-      html: utf8ToBase64(html),
-      css: utf8ToBase64(css),
-      js: utf8ToBase64(js),
-      leftActiveTab: utf8ToBase64(leftActiveTab),
-      rightActiveTab: utf8ToBase64(rightActiveTab),
-      panelState: utf8ToBase64(panelState),
+      note: "Everything here is using the LZ-based compression algorithm for JavaScript",
+      html: utf8ToBase64(html) || "",
+      css: utf8ToBase64(css) || "",
+      js: utf8ToBase64(js) || "",
+      leftActiveTab: utf8ToBase64(leftActiveTab) || "",
+      rightActiveTab: utf8ToBase64(rightActiveTab) || "",
+      panelState: utf8ToBase64(panelState) || "",
     };
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
       type: "application/json",
@@ -97,7 +97,6 @@ const ExtraMenu = ({ editorValues, importProject }) => {
   const exportAsHTMLFile = () => {
     dispatch(setImportProjectTimestamp());
     const result = code.htmlPage;
-    console.log("code.htmlPage: ", code.htmlPage);
     const blob = new Blob([result], {
       type: "text/html",
     });
