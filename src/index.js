@@ -8,10 +8,14 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import App from "./App";
+import Viewer from "./components/Viewer";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createHashRouter(
-  createRoutesFromElements(<Route path="/" element={<App />} />)
+  createRoutesFromElements([
+    <Route path="/" element={<App />} />,
+    <Route path="/viewer" element={<Viewer />} />,
+  ])
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

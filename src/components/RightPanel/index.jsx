@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Tabs, Tab, Button, IconButton } from "@mui/material";
+
 import {
   Container,
   Header,
@@ -11,11 +12,14 @@ import {
 import Console from "../Console";
 import createWindow from "../../utils/create-window";
 import DeleteIcon from "@mui/icons-material/Delete";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { setRightActiveTab } from "../../store/slices/ui-slice";
 import { updateHTMLPage } from "../../store/slices/editor-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { handleSetQueryParams } from "../../utils/query-params";
+import { utf8ToBase64, base64ToUtf8 } from "../../utils/base64Converter";
+import constructViewerURL from "../../utils/construct-viewer-url";
 
 const RightPanel = () => {
   const dispatch = useDispatch();
@@ -62,6 +66,21 @@ const RightPanel = () => {
           <Tab value={"console"} label="Console" id="simple-tab-0" />
           <Tab value={"preview"} label="Preview" id="simple-tab-1" />
         </Tabs>
+        {activeTab === "preview" ? (
+          <ButtonContainer>
+            <IconButton
+              variant="contained"
+              color="primary"
+              component="a"
+              href={constructViewerURL(code)}
+              target="_blank"
+            >
+              <OpenInNewIcon />
+            </IconButton>
+          </ButtonContainer>
+        ) : (
+          <></>
+        )}
         {activeTab === "console" ? (
           <ButtonContainer>
             <IconButton

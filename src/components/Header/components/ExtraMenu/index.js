@@ -23,6 +23,7 @@ import {
   setPanelState,
 } from "../../../../store/slices/ui-slice";
 import { compiledHTMLFile } from "../../../../utils/save-compiled-html";
+import constructViewerURL from "../../../../utils/construct-viewer-url";
 
 const ExtraMenu = ({ editorValues, importProject }) => {
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ const ExtraMenu = ({ editorValues, importProject }) => {
   const exportAsHTMLFile = () => {
     dispatch(setImportProjectTimestamp());
     const result = code.htmlPage;
+    console.log("code.htmlPage: ", code.htmlPage);
     const blob = new Blob([result], {
       type: "text/html",
     });
@@ -149,6 +151,9 @@ const ExtraMenu = ({ editorValues, importProject }) => {
         >
           MANAGE PROJECT
         </ListSubheader>
+        <MenuItem component="a" href={constructViewerURL(code)} target="_blank">
+          View In Separate Tab
+        </MenuItem>
         <MenuItem onClick={importHandler}>Import Project</MenuItem>
         <MenuItem onClick={exportHandler}>Export Project</MenuItem>
         <MenuItem onClick={exportAsHTMLFile}>Save as HTML</MenuItem>

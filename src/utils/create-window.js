@@ -35,7 +35,7 @@ const getScriptType = (js) => {
   return "text/javascript";
 };
 
-const createWindow = (iframeRef, { html, js, css }) => {
+const createWindow = (iframeRef, { html, js, css }, viewerMode = false) => {
   clearInterval(interval);
 
   // Do some fancy stuff to replace the <JSBX-CSS> and <JSBX-JS> tags in the html string
@@ -73,26 +73,26 @@ const createWindow = (iframeRef, { html, js, css }) => {
       return;
     } else clearInterval(interval);
 
-    const injectScript = iframeDoc.createElement("script");
-    injectScript.innerHTML = /*javascript*/ `
+    if (!viewerMode) {
+      const injectScript = iframeDoc.createElement("script");
+      injectScript.innerHTML = /*javascript*/ `
+    if(parent?.window?.childConsole) {
         window.console.log = parent.window.childConsole.log;
         window.console.error = parent.window.childConsole.error;
         window.console.info = parent.window.childConsole.info;
         window.console.warn = parent.window.childConsole.warn;
         window.console.success = parent.window.childConsole.success;
 
-        // window.onerror = (error, url, line) => {
-        //    parent.window.console.error(error, null, ' | line ' + line);
-        // }
-
         window.onerror = (error, url, line) => {
           parent.window.childConsole.error("Error: " + error.toString() + " | Line: " + line)
         }
+      }
 
         if(window.onload) window.onload();
     `;
 
-    iframeDoc.head.prepend(injectScript);
+      iframeDoc.head.prepend(injectScript);
+    }
 
     const scriptType = getScriptType(html);
     const babelPreset = getBabelPreset(html);
